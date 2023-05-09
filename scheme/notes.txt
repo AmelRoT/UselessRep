@@ -1,0 +1,639 @@
+--------------------------------- Chapter 8 Notes(Statement Level - Control Structures)---------------------------------------
+- Control statments are statements that allow the following : 
+    1. manage alternative control paths (flow of the code)
+    2. manage the iteration(repeated execturion of statements) process.Usually logically controlled iteraton 
+
+- instead of using goto statments 1. or 2. can be implemented. It has been proven 
+- if additional features are added it addds up to the writablity of the program and flexbility at the expense of readability, simplicity and size 
+- control structure is a control statement that controls the execution of the collection of statements 
+- Design issue : should the control structure have multiple entries? 
+The multiple exits are not an issue because what would happen if there is no explicit exit
+
+8.2 Selection Statements
+--------------------------------------------------------------
+-selection statement choosing the one of the paths of execution -> 2 way and n way selections 
+
+2 way selection : 
+    if statmeent 
+        then clause 
+    else statment 
+
+Design issues : 
+    1. What type and form controls the selection(control expression type controlling it - > boolean, arithmetic etc) ? 
+    2. specification of then and else statments 
+    3. specification of nested selectors? more than one if 
+
+- C89 did not have boolean expressions therefore arithmetic were used 
+- () used if then is not specified -> if (some comparison ) {}
+- Python, C++,  C99 support both arithmetic and boolean statements 
+- Ada, Java, Ruby only supports boolean for control expressions 
+
+- then and else are specified, in python by identation and keywords, whereas in Fortran it is specifed by then with and end keywords
+- in nested if selector statements, else has to be associated properly and the grammar needs to be known 
+- in python it is simple because identation tells us, in some langaues usually {} are used to seperate the blocks of code and inform on the nested if and else ass.
+- in java else is bound to the nearest if statment 
+
+N - way selection construct (Multiple selection construct) - think about swtich case of C 
+--------------------------------------------------------------------
+- selection of n number of statement or collection of statements 
+
+Design Issues : 
+    1. type of control expression (boolean, arithmetic etc)
+    2.what is selected, single statment, compound statements or sequence of statement.How are segments specified? 
+    3.is only one selectable segment allowed to be executed or more (switch case in C, does it continue or break)
+    4.what should happen if the selector does not provide any suitable case (in most langauges default is implemented to tackle it)- Unhandeled expressions? 
+
+- control expression in C can be integers, characters etc.
+- control does not provide implicit branching so it can flow through more than one statmeent (break has to be used )
+- decrease in reliability is met with increase in flexibility 
+In C# the implicit branching is included which does not allow to jump from one switch case to another within the execution (break or goto is necessary)
+- Ada provides ordinal type expression selection (Integer, Boolean ,character or enumeration type)
+- when others is similar to [default] clause in other lang. for switch case 
+
+switch case is not based on the boolean type and can be inadequte and repalced by (if -> else if statements )
+if else can be used as a substitue for the switch 
+
+8.3 Iterative statements 
+-----------------------------------------------------------
+- statments that controls the execution of other statements one or more times(iteration pretty much- loop).
+Design issues : 
+    1. How is the iteration controlled ? - counter controlled or logic 
+    2. What control mechanics appears in the loop construct? Where should control happen at the top, bottom and the effect of it is important 
+    rather than the physical place, somewhere in the loop (break from while)
+pretest - tests before the body loop execution (while loop) and postest after (do while loop )
+
+Counter contolled loops 
+- intial, terminal value and loop variable that increments or decrements (counter of stepsize)
+
+Design issues : 
+    1. what are the type of the loop variable? 
+    2. Scope of the loop variable ? 
+    3. can the loop parameters be changed in the loop, if yes how would that affect the overall control ?
+    4. How are loop parameters evaluated per iteration ? Only once or each time it has be reinitilized? 
+
+Do i = start, stop value [stepsize]
+
+end do (Fortran)
+For loop in Ada can be of integer or enumeration type -> additional feature of [reverse] is added to the for loop
+- variables in Ada loop have loop scope meaning that if the variable outside (local, global or static is used ) the loop does not affect it 
+    count : int := 10 
+    for count 1..10 loop
+        sum = sum+count; 
+    end loop 
+    count is unaffected by the loop count do to the scope. 
+
+for loop in C based lang are arithmetic and boolean, in Java it has to be boolean (control expression)
+- python uses range to accomplis the start and final value of the counter loop 
+
+Logically Controlled loops : based on boolean epxression rather than counter 
+-----------------------------
+Design issuse : 
+    1. is the control pretest or posttest? 
+    2. is it a special form of CCL or sperate statement? 
+
+- in C based lang it is not a special form of CCL(counter controlled loop) and it uses both posttest(do while loop) and pretest (while loop)
+- Java does not support goto statements therefore the while loop can not be entered anywhere but at the beginning of the statement 
+
+User Located Loop control Mechanism - break in while loop 
+
+Design Issues : 
+    1.Should the conditional part cause the exit (while loop statisfied)? 
+    2. what should be exited if the loop is nested, the first enclosing loop or the whole nested loops ? 
+
+- C based lang use unconditional unlabeled exit - conitnue and break  
+- Java uses unconditioanl labeled exit (place where to conitue after exit with break)
+- break by the user specifies to some degree better control and usage of goto statement and it does not hinder readability 
+
+Iteration controlled by data structure 
+ - the control is done by number of elements in the data structure 
+ - foreach in C# it traverses through the data structure or a list of items with iterator (moving from one node to another )
+
+ 8.4 Unconditional Branching 
+ -------------------------------------------
+ -transfers the control at specified location in the code 
+- goto statement (unconditional branching or placement of code at ceratin place or location)
+- reliability and redability are the concerns for UB.
+- Java Python and Ruby do not have goto statemnt - obsolete for them 
+
+ 8.5 Guarded Commands 
+ -------------------------------------------
+- correctness during development of the program rather than after its testing. 
+if (boolean statment )- guard and -> statement which is guarded command 
+    [] boolean statmeent 
+fi 
+
+
+- From presentation 
+
+Multiple Way selection in C : 
+1. only integer type is allowed 
+2. sigle or compound statement segement is allowed to be executed 
+3. if the case is satisfied and not terminated it resumes to next case (without break) - Multiple segmeents can be executed per construct 
+4. default used for unhandled cases 
+
+Multiple Way selection in Ada : 
+1. oridnal type is allowed 
+2. sigle or compound statement segement is allowed to be executed 
+3. if the case is satisfied and not terminated it does not resume to next case (without break) - Single segmeents can be executed per construct 
+4. when others  used for unhandled cases 
+
+Design choices for Fortran:
+1. Loop variable must be INTEGER
+2. Loop variable always has its last value
+3. The loop variable cannot be changed in the loop, but the parameters can; because they are evaluated only once, it does not affect loop control
+4. Loop parameters are evaluated only once
+
+Design choices for C:
+1. First expression is for initialization
+2. Second expression is the loop control (If the second expression is absent, it is an infinite loop)
+3. Third expression is executed after each execution of the loop body (often increment loop counter)
+- Everything can be changed in the loop
+- The first expression is evaluated once, but the other two are evaluated with each iteration
+
+
+
+-------------------------------------------Chapter 9 Notes(Subprograms) ----------------------------------------------------------
+- process and data abstraction 
+- data abstraction- if data is not visible (not public) to outer world ->requries methods to access the data (getters and setters)
+- data abstraction hiding certain function of a particular object -> details of it is not specified (abstract functions)
+
+Fundamentals of Subprograms 
+-----------------------------
+1. Each subprogram has a signle entry
+2. The calling program is suspended during the execution of the called subprogram   
+3. Control is retured back to caller when the execution of the subprogram terminates 
+
+- subprogram defintion represents the inteface and actions of the subprogram abstraction 
+- subprogram call is the request to execute the subprogram 
+- active if the exeuction is not terminated 
+- subprogram header -> the type of subprogram, parameters and name of the subprogram 
+    void function (int a, int b ) - > type , name , parameters 
+
+- in Python def has to be executed prior to calling the program (in if else statement it can have only one defintion)
+First class entity : 
+    1. stored in data structures 
+    2. passed as parameters 
+    3. returned from functions 
+    
+If a function is 1.st class entity it would suffice the given 3 statements 
+- parameter profile - number, order and type of formal params 
+- protocol is the parameter profile + return type of function 
+- prototypes are the function declaration (Common in C based lang.)
+
+parameters -> give access to values of certain nonlocal variables through passing them as formal parameters
+- it is more flexible than the access to nonlocal variables 
+- formal parameters are the parameters in the header of the subprogram 
+- acutal parameters are the parameters that are passed to subprogram during the call of it (bounded parameters to formal ones  during the call of subprogram)
+- usually the actual parameters are bound to formal by position 1.st actual to 1.st formal etc 
+- another method is keyword passing of actual to formal parameters 
+- advantage is that it eliminates the possibility of making mistake by the ordering (forgets the positon of paramets)
+the disadvantage is that it is difficult to keep track of the names 
+
+- default value is possible in Python, Ruby , Fortran 95 etc -> if no value is passed to a formal parameter is passed 
+Procedrues and Functions : 
+- procedures define computation, enacted by using call statement 
+- procedures do not necessariely return a value but perform a calculation 
+- functions they do not need to return a value but usually do, provides no side effects to the parameters??? Many have only pure do not. 
+
+Design Issues for Subprograms : 
+    1. Are the local variables statically or dynamically allocated? 
+    2. Can a subprogram definiton appear in other subprogram definition? 
+    3.What parameter passing method is used ? 
+    4. are types of actual parameters check in comparison to formal ones? 
+    5. Referencing environemnt of the passed subpgoram , assuming a subprogram can be passed as a parameter (like in javascript)
+    6. Can subprogram be overloaded? 
+    7. can subprgram be generic? 
+
+local Referencing Environment 
+--------------------------------------------
+1. Local Variables - variables defined within the subprogram 
+ -stack dynamic -> bound during the exe and unbound at the termination 
+    Pros : 1. support recurion and flexibility 
+           2. sharing the storage with other local variables in not active subprogram 
+    Cons : 
+        1. takes time to allocate and deallocate memory 
+        2. access to them has to be indirect, while for static it can be direct 
+        this means that the memory and thus access can be determined only during the execution 
+        3. history sensitive, can not retain the value after the subprogram is terminated or between calls 
+
+    Pros of static local vars : 
+        1. they are more efficient - removing the run-time overhead 
+        2. can be accessed directly (static allocated before run time)
+        3. can retain values in between the program calls 
+    Cons : 
+        1. can not support recursion 
+        2. storage can not be shared with the local variables of inactive subprograms 
+
+Nested subprograms - Alogol 60 - > static scoping used in that type of subprograms 
+
+Parameter passing Methods 
+--------------------------------------------
+- transmission of parameters to and from the callee (subprogram)
+     1. transmit -> out mode  -> callee ->caller 
+     2. receive -> in mode -> caller -> callee
+     3. both -> in-out mode  -> both 
+
+Models of Parameter passing methods : 
+-----------------------------------------------
+    1. Pass by Value -> in mode the actual parameters are passed to formal ones and are not modified back
+    it is usually copied one by one 
+    Pros : 
+        1. It is fast with scalars in both linkage and cost time 
+        2. Widely used and it is simple
+    Cons : 
+        1. It uses copying and it is costly (huge arrays for instance )
+        2. additonal storage requried for formal parameters due to copying (inefficient storage)
+
+    2. Pass by Result -> out mode the actual parameters are passed from formal ones and are modified(no parameters are transmitted to the subprogram)
+        Pros : 
+        1. It is fast with scalars in both linkage and cost time 
+    Cons : 
+        1. It uses copying and it is costly (huge arrays for instance )
+        2. additonal storage requried for formal parameters due to copying 
+        3. possible parameter collision (returning both p1 to the diffrent parameters -> sub(a,b) -> sub(p1,p1)) 
+        4. address of actual parameter can be chosen at different times -> during call or retrun sub = 21 -> call (list [sub], a), call(out int x )
+        is it taking x or sub for its parameter 
+
+    3. Pass by Value-Result -> in-out mode the actual parameters are copied from and to formal ones and are modified(both directions )
+    - it is in effect combination of 1. and 2.nd one.   
+    - Pros and Cons are shared with the 1. and 2. with additonal disadvantage that is it requires more storage 
+
+    4. Pass by Reference -> inout mode 
+    - just passes the address instead of copying one by one 
+    - actual parameter is shared through address with the formal one 
+
+    Pros : 
+        1. efficient passing process of parameters (both space and time )
+        2. duplicate space is not required or any additional space 
+    
+    Cons : 
+        1. access to formal parameters is slower than in pass by value-result (reqires more levels of indirect addressing )
+        2. unwanted changes could be made to the parameters (if one way communication is wanted)
+        3. aliases can be created - hinders readability and reliability  
+        4. it could be more difficult to understand (pres notes)
+
+        4. Pass by Name -> inout mode 
+            - actual parameters are textually substitued for the corresponding formal parameters
+        It is used at the compile time and it is not typically used by any PL 
+
+    Pass by Value -> stack is reserved for the formal parameters 
+    Pass by Result -> stack is reserved for the actual parameters 
+    Stack location for parameters is initilzed when the program is called - Pass by Value Result 
+    Pass by reference - only address is placed in stack of the actual parameter 
+
+    - In C or C++ the pass by value is used and pass by reference 
+    - In java pass by value is used, but pass by reference had to be implemented with objects 
+    - fortran uses in, out and inout mode of passing parameters 
+
+- types are sometimes passed by coersion in the header int to double without providing error (widening) 
+
+Multidimensional Arrays as Parameters 
+----------------------------------------
+- in C# param is used, in C usually passed by pointers 
+
+Subprograms as Parameters 
+----------------------------------------
+- some mathemaatical function as an input to other program 
+    Three ways to implement it : 
+        1. Deep biding (textual layout - statically scoped lang.) - environemnt of the defintion 
+        2. Shallow binding (the closest -> natural for dynamically scoped lang.) -> environment of the call statement 
+        3. Ad hoc binding (who called the function) -> environemnt of the call statment who passed it as parameter
+
+Overloaded subprogram - has the same name but different profile 
+Generic subprogram - can have different types at the run time (<int >, <string > in C# or whatever type user specifies because it is generic)
+
+    1. Ad hoc polymorphism - provided by the overloaded Subprograms
+    2. General polymorphism - does not contain types (like Python, JavaScript, Ruby)
+    3. Parametric polymorphism - like in C, Java it has a generic parameter that accepts various types (<int>,  <string> , <boolean>)
+
+Ada supports generic units , C- templates , Java generic Parameters 
+
+
+
+--------------------------------- Chapter 10 Notes(Implementing Subprograms) ---------------------------------------
+
+General Semantics of Calls and Returns 
+----------------------------------------------------------------------------------------------------------------------------------------
+- Call and return of a subprogram is called subprogram linkage 
+- the call must implement  whatever parameter is passed in the subprogram during the call method (parameter pass method - in, out , in-out )
+- local variables need to be binded to the storage
+- it must save the execution status(everything that is requried to resume the execution) of the calling program 
+- execution status includes registers, CPU status bits and EP(environment pointer)
+- EP is used to access parameters and local variables during the execution of the program 
+- the tranfer control has to be arranged such that the control can return to a proper place after execution of subprogram 
+- if the subprogram is nested the call process has to provide mechanism for accessing local variables that are visible within the scope of the called Subprograms
+
+Implementing "Simple" subprogram  
+-----------------------------------------------------------------------------------------------------------------------------------------
+Assumption : all local variables are static and no nesting is allowd 
+
+Actions that are required : 
+    1. Save the execution status of the current PU(program unit). 
+    2. Compute and pass parameters 
+    3.Pass the return address to the callee 
+    4.Transfer the control to the callee
+
+Return Actions from a simple subprogram : 
+    1.If pass by value-result is utilized for the parameter passing, the values of those parameters are passed back to the actual params.
+    2.if the subprogram is a function, the functional value is returned to an accessible place for the caller.
+    3.Execution status of the caller is restored 
+    4. Control is transfered back to the caller(resumes the execution of the main). 
+
+The call and return require storage : 
+    1. Status information of the caller
+    2. Parameters 
+    3. Return address 
+    4. Return value of the function 
+    5. Temporaries used by the code of the subprogram(storage of the local variables)
+
+Prologue and epilogue is the linkage of the callee either at the beginning or at the end of the execution 
+In the simple program the linakge is done at the end - epilogue 
+
+Activation record is the layout of the noncode part of a subprogram - data is relevant only during the activation 
+Activation record instace represents the collection of data in the form of acitvation record, pretty much concrete example of activation record instance
+
+    ----------------
+    local variabeles 
+    ----------------
+    parameters
+    ----------------
+    return address  
+    ----------------
+
+linker or loaders are used to link the appropraite addresses of the subprogram in the main or caller such that it could be during the execution 
+it has to find them and load them into memory (activation record instance and code of the subprogram)
+    Linker does the following : 
+        1.Find all of the object files that are being called by the subprogram
+        2.Load these files into the main memory
+        3.Linker replaces the function call statement with their equivalent entry address.
+
+
+Implementing "Stack-Dynamic" subprogram with local variables (10.3)
+------------------------------------------------------------------------------------
+locals are stack-dynamic 
+- stack-dynamic local variables support recursion 
+
+Activation Record : 
+ 1. implicit allocation and deallocation of memory is requried by compiler
+ 2. Recursion adds the possibiltiy of activation of multiple subprograms(many instances that are incomplete could be running at the same time)
+
+ACI (activation record instances) must be created dynamically ->
+ 
+     ----------------
+    local variables 
+    ----------------
+    parameters
+    ----------------
+    dynamic link (DL)
+    ----------------
+    return address  
+    ----------------
+
+Dynamic link points to the end of the calling program (if main called subprogram the dynamic link would point to the end of calling of the main)
+DI - provides traceback information and could be used to access nonlocal variables.
+EP is saved as a dynamic link such that it points at the base or end of the first address of the activation record instance.Current EP - 1 upon returning back to the caller
+In this way the top of the stack is resetted effectively 
+EP is used for offsetting as well,params and local variables 
+
+Revised list : 
+    1. Create ARI *** (this is because of the stack we requrie ARI)
+    2. Save the current exe status 
+    3.compute the pass parameters 
+    4.pass the return address to callee
+    5. Transfer control to the callee
+
+Prologue : 
+    1.Save the old EP in the stack as the dynamic link 
+    2. allocate local variables 
+
+Epilogue : 
+    1.If pass by value-result is utilized for the parameter passing, the values of those parameters are passed back to the actual params.
+    2.if the subprogram is a function, the functional value is returned to an accessible place for the caller.
+    3.EP pointer is resetted to EP-1 and setting EP to old dynamic link(essentially removing the subprogram from the stack)
+    4.Execution status of the caller is restored 
+    5. Control is transfered back to the caller(resumes the execution of the main). 
+
+-Collection of dynamic links in the stack is called dynamic chain or call chain.
+-The offset from the beginning of AR(I) is local offset.
+
+-------------------------------------------------------
+Nested Subprograms 
+--------------------------------------------------------
+
+fiding the nonlocal variable that is in the ARI and using local offset to access it.
+Static chains 
+- most commonl used method to provide static scoping in a nested subprogram 
+static link or pointer is used that points to the bottom(base) of the ARI of static parent 
+- statlic link is used to access nonlocal varaibles (similar to dynmic link in stack dynamic variables )
+static chain is the chain of static links that connect them in stack (connecting all of them in the execution )
+static depth determines how deeply it is nested in the outermost scope.
+- static depth of main would be 0, first function called by main would be 1 and so on.
+chain offset is the difference of the depth with respect to the reference, static depth of A - static depth of C
+
+(0, 3 ), (1, 3) - (chain offset (static offset ), local offset (offset in ARI ))
+
+Deep and Shallow Access (not binding)
+ 
+ deep access  - serching for nonlocal variables through other activaed subprograms(one most recently activated) - this can be long and thus it is called deep
+ in this access the chain is followed 
+ since the chain length can not be determined at the compile time the search is only possible during the execution 
+ execution of dynamically scoped languages result in slower execution due to the search prcess than the statically scoped lang.
+ name and valuse are required in DSL whereas in SSL (statically scoped Lang) it just requires values all vars are represented by chain offset
+
+ Shallow Access 
+ using a seperate stack for names such that it could be stacked on top of one another and after the subprogram is terminated the stack of names is popped
+ Another way is to implement the central table, the offset in the table is static and the time to access the variables can be fast 
+ the overhead could happen and to eliminate it the central head could be using the vars like a stack with the running subprogramms 
+ subprogram linkage is costly and nonlocal access is fast, whereas in Deep access the linkage is fast but the nonlocal access is costly.
+- blocks can be treated as parameterless subprograms or statically computed with offset(where the size of the executed block programm can be statically determined)
+- the second block method is known as static memory layout and can be used to store locals of blocks in the same places (while() a,b replaced while() f,g) popped from mem.
+- in dynamically scoped langagues deep and shallow access is used. 
+
+ --------------------------------- Chapter 15 Notes(Functional programming) ---------------------------------------
+
+- imperative langauges are based upon Von Neuman architecture 
+- minority of programmign langauges nowadays are utilizing functional programming 
+- LISP, Scheme, Haskell, ML are all functional PL 
+- Scheme is statically scoped language and a dialect of LISP
+- Purly functional programming langauges are more readable, reliable and likely to be correct (no functional side effects -> 1st Class entity  )
+- in imperative lagnagues state change is important whereas in functional it is not-existent
+- functions are first calss objects in FPL whereas in IML instances of classes or structres variables etc.
+- iteration control done with loops in IMPL in FPL the recursion is used.
+- order in really importatn in IMPL, whereas in FPL it is less important.
+- variables are bound to memory and if the float value used is different would case different results per iteration, FPL always provide the same result with the same IC.
+- no functional side affects are possible in FPL. 
+- FPL execution is less efficient than IMPL execution that is one of the reason why IMPL are used in execution time dependant tasks.
+Mathemaatical Functions 
+---------------------------------------------------------------
+
+- mapping of domain set to the range set 
+- mapping can be described by the table or expressions 
+- iteration is replaced by recursion in FPL (functional programming langauges )
+- variables(in an imperative sense) are not present and no side effects are possible 
+- in imperative lang. the local variable maintain the state of the function(in FPL this is not possible)
+
+---------------------------------------------------------------
+Simple Functions 
+---------------------------------------------------------------
+cube(x) = x*x*x
+lambda(x) = nameless function
+
+---------------------------------------------------------------
+Functional Form 
+---------------------------------------------------------------
+- a higher order function -> takes function as a parameter or retruns a functions as a result or both 
+b = f o g 
+f = x+2 
+g = 3*x
+b(x) = f(g(x)) = f(3x) = 3x+2
+
+Apply to all (alfa function) can be used to apply it to all 
+if b(x) = x*x
+    alfa*(b(1,2,3)) -> (1,4,9)
+
+---------------------------------------------------------------
+Fundamentals of Functional PL 
+---------------------------------------------------------------
+- the design is done such that it mimics mathematical functions 
+- the recursion eliminates iteration and variables are not possible hence the memory storage of variables like in 
+imperative lang. is abolished in the functional programming langauges 
+- referential transparacy is observed in the functional programming lang.- every time the code is executed the same result is observed 
+- recursion adds up to the speed and it cuases overhead which is a downside in comparison to the imperative langauges.
+
+---------------------------------------------------------------
+LISP programming language - basics 
+---------------------------------------------------------------
+- two types of data objects : 
+    1. Atoms (symbols or identifiers )
+    2. Lists (A B C D ... )
+
+---------------------------------------------------------------
+Scheme programming language - basics 
+---------------------------------------------------------------
+- dialect of LISP - static scoping 
+- treating functions as first class entities 
+
+First Class entities : 
+     1. functions can be values of expressions 
+     2. elements of Lists [fun1, a, ,b ,c]
+     3. can be assigned to variables and 
+     4. passed as parameters 
+
+- scheme interpreter is read-evalute-write infinite loop 
+- expressions are interpreted by EVAL. 
+- car and cdr primitive list selectors, quote - > (') used for Lists
+
+Comaprison between FPL and IMPL 
+
+    1. FPL simple syntax and structure 
+    2. Imperative lang have complex syntax 
+    3. semantics of FPL is simpler in general 
+    4. No functional side effect in FPL (no loops)
+    5. IMPL a lot faster than FPL (interpreation of FPL is slow in comparison to IMPL)
+    6. FPL has better readability 
+    7. understanding of concurrent programs is more challenging for IMPL 
+
+    
+ --------------------------------- Chapter 16 Notes(Prolog programming) ---------------------------------------
+- taking notes from tutorial 
+- prolog creates fact and relationship about the problem rather than steps to solve it 
+- all facts and rules are in database 
+- content of database can be displayed using listing 
+- predicates are the commands of this 
+loves(romeo, juliet) -> loves is predicate
+- romeo i juliet are atoms 
+- atoms are passed as parameters 
+- :- if the item on the right is true so is the left : 
+loves(juliet, romeo ) :- loves (romeo, juliet)
+
+------- Variabless --------------------
+variable is an object that can not be named during execution 
+variables are uppercase or (_) underscore
+- can contain same symbols as atoms 
+- atoms are lowercase
+
+loves(romeo, X ), X is variables whereas the romeo is the atom 
+
+----Facts ---------------------------------------------------------
+relatioship -> (object1 object2) -> dot (.)
+Predicate is the name prior to parenthesis
+Rules are used to connect the facts and to display dependance between them (among them)
+- if statement does not exist 
+- use case statement instead 
+
+-------------Structure --------------------------------------------
+- object that is made up from many other objects (components)
+- recursion can be used to chekc all of the possible combinations and rules 
+- program calls itself until final point is reached 
+
+------------- Lists ---------------------------
+- atoms, complex terms, variables, numbers and other lists can be stored in a list 
+ [car, airplane, tractor]
+ [mia, X , 2, female (alice)]
+ [rob [alice, albert ]]
+
+ - pipe | can be used to add items to the list 
+ - length([1,2,3], X )- getting length of the list 
+- using [H|T] to dvidie into head and tail of the list
+
+------------------------------------- Chapter details (16)-----------------------
+- logical programming is declarative rather than being procedural (using symbolic logic )
+- logic programming (we have tackled imperative and functional thus far)
+- proposition is a logical statmeent that may or may not be true (therefore they are checked to observe its validity)
+- Symbolic logic utilized in 3 ways : 
+    1. express propositions 
+    2. express relationship between propositions 
+    3. inferring of new propositions from the given ones
+-constants and variables
+- constants represents a object 
+- variable represents different objects at different times 
+
+like(man) - man constant(atom), like is predicate or atomic proposition 
+- proposition is logical statement that can be true or false 
+- symbolic logic has 3 basic needs : 
+    1. expressing propositions
+    2. relationship between propositions
+    3. how to infer the new propositions from already known ones (already true)
+
+Predicate calculus is the form used for the logic programming 
+- objects are represented as constants or variables
+- constant represent an object whereas the variable represents different objects at different times 
+- compound term is the element of mathematical relation(tabular definiton of function)
+- compound terms form atomic propositons - simplest form of propositons 
+- compound term -> man (jake), like (bob, jake) -> these are propositons are comprised from compound terms (jake ,bob etc 2 tuple, 1 tuple jake )
+- propositions can be taken as facts or queries (to be determined)
+- compound propositions connected with some logic (many atomic propositions connected together).
+- antecendent implies consequent (B B or B is implied by A and A and A )
+
+Predicate Calclus - Proving Theorems 
+- Resolution an interface rule that can be used to to infer propostions from the given propositions
+(essentailly could be used to automatically prove theorems)
+- unifacation parents (jake fred ) and parent(tom jake)- > grandparent (tom fred)
+- temporary assignemnt of variables during unifactions is known as instantiation 
+- goal is the negation of the theorem and hypothesis is the proposition 
+- headless horn facts (empty left side ) used for displaying facts (parent(edin, eldin))
+- logical programming is not procedural (the usual instructions are not used like in imperative or procedural lang)
+- functor - any atom (or any symbolic value) (usually gives a name to compound term). 
+- compound term provides withing parameters tuples (1, 2, 3 ) - > parent(anja), parent(john, josh) (1, 2 tuples) 
+- parameter list - any list of atoms, varaibles and structures 
+-------------------------------------------------------------------------------------------------------------------------
+
+- Prolog term - constant, variable or structure 
+- constant is an atom or number(integer,float ...)
+- atoms are lower case letters whereas the Variables are Uppercase or _
+- instatntaion is binding a varaible to a type and it happens in resolution process
+- structue is called a predicate or propositions 
+likes (tom,susan). -> ?- likes(X,Y) -> X = tom , Y = susan 
+(.) used for termination 
+:- if statement antecendant part(right side)
+left side consequent or then part
+- Conjuctions muiltiple terms seperated by commas (AND)
+- goals or queries ?-  to see if the theorem is right or wrong to test it with goal statments 
+top-down resolutioon (backward chainig )- good for small sets - starts with the goal and then facts
+bottom-up resolutioon (fowards chainig )- good for large sets - starts with the facts and then goals, bottom up -> Facts to goal 
+
+- depth first finding the complete set of propostions a proof
+- breadth first searches all subgoals of the goals in parallel (requirse a lot of memory)
+- backtracking - if the system fails at some subgoal it returns back to previous proven subgoal and attempts to find solution from there.
+backtracking male(X), parent(X, anna) -> first finds male (mike) - ?- parent(mike, anna ) if not returns back to male ..
+- slow execution and possible infinite loop due to left-to -right depth -> ancestor(X,Y) :- ancestor(Z,Y), parent(X,Z) 

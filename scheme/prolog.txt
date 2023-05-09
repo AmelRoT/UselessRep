@@ -1,0 +1,49 @@
+
+-------------------------------------- Recursion -----------------------------
+someRandom(this).
+
+someRandom(X) :- someMovement(_,X,B), someRandom(B). 
+
+
+someMovement(tamo, vamo ,gore).
+someMovement(idemo, gore, this). 
+someMovement(hajmo, tamo ,vamo).
+
+----------------------------------------------------------------------
+
+parent(tom,eldin). 
+parent(eldin, adin). 
+parent(adin, besmela). 
+parent(besmela, besmela2). 
+
+
+findRelation(X,Y) :- parent(X,Y). 
+
+findRelation(X,Y) :- parent(X,Z), findRelation(Z,Y).
+
+-----------------------------Searching through list -----------------------------------
+match(X,[X|_]). 
+match(X,[_|T]) :- match(X,T).
+
+----------------------------------Building a list ------------------------
+List2 = [h|list1]
+
+addElementList([],List,List). 
+addElementList([Head|T],List,[Head|ListResult]) :- addElementList(T,List,ListResult). 
+
+
+listTest([],[]).
+listTest([Head|Tails],[Head|Result]) :- Head > 6, listTest(Tails,Result).
+listTest([_|Tails],Result) :- listTest(Tails,Result).
+
+
+listMaking([],[]). 
+listMaking([X,X1|T], [X1|Result] ) :- X=6, listMaking(T,Result).
+listMaking([_|T], Result) :- listMaking(T,Result).
+
+
+listMaking([],_,[]). 
+listMaking([X|T],Y,Result) :- X=Y,listMaking(T,Y,Result). 
+listMaking([X|T],Y,[X|Result]) :- X=\=Y,listMaking(T,Y,Result). 
+test(X,[X|_]).
+----------------------------------------------------------------------------
